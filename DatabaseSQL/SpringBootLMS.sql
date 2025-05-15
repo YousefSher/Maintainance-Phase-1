@@ -48,6 +48,8 @@ CREATE TABLE `admin` (
   CONSTRAINT `FK_admin_user` FOREIGN KEY (`user_account_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+insert into admin (`user_account_id`) values ('1') ;
+
 CREATE TABLE `course` (
   `course_id` int NOT NULL AUTO_INCREMENT,
   `course_name` varchar(255) NOT NULL,
