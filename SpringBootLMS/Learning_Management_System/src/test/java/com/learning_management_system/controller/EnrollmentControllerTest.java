@@ -48,14 +48,14 @@ class EnrollmentControllerTest {
         enrollment.setCourse(course);
         enrollment.setStudent(student);
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
         doNothing().when(enrollmentService).enrollInCourse(any(Enrollment.class), any(HttpServletRequest.class));
 
-        ResponseEntity<String> response = enrollmentController.enrollInCourse(enrollment, request);
+        ResponseEntity<String> response = enrollmentController.enrollInCourse(enrollment, mockedRequest);
         assertEquals(200, response.getStatusCodeValue());
 
         assertEquals("Student enrolled successfully!", response.getBody());
-        verify(enrollmentService, times(1)).enrollInCourse(eq(enrollment), eq(request));
+        verify(enrollmentService, times(1)).enrollInCourse(eq(enrollment), eq(mockedRequest));
     }
 
     @Test

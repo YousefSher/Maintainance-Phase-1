@@ -31,7 +31,7 @@ class NotificationServiceTest {
     private UsersType instructorType;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
 
         instructorType = new UsersType();

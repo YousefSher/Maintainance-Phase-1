@@ -136,7 +136,7 @@ public class LessonService {
                         lesson.getContent(),
                         lesson.getCreationTime()
                 ))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private Course check_course_before_logic(int courseId, HttpServletRequest request) {

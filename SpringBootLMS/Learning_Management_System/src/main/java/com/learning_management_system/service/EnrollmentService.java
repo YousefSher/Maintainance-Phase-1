@@ -75,7 +75,7 @@ public class EnrollmentService {
                         student.getFirstName(),
                         student.getLastName()
                 ))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void removeEnrolledStudent(int courseId, int studentId, HttpServletRequest request){

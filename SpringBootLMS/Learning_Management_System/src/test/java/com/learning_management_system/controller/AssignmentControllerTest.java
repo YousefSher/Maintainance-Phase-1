@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class AssignmentControllerTest {
+class AssignmentControllerTest {
 
 
     @Mock
@@ -50,64 +50,64 @@ public class AssignmentControllerTest {
         assignmentDto.setAssignmentId(1);
         assignmentDto.setCourseId(1);
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
         doNothing().when(assignmentService).uploadAssignment(any(AssignmentDto.class), any(HttpServletRequest.class));
 
-        ResponseEntity<String> response = assigmentController.uploadAssignment(assignmentDto, request);
+        ResponseEntity<String> response = assigmentController.uploadAssignment(assignmentDto, mockedRequest);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Assignment uploaded successfully.", response.getBody());
 
-        verify(assignmentService, times(1)).uploadAssignment(eq(assignmentDto), eq(request));
+        verify(assignmentService, times(1)).uploadAssignment(eq(assignmentDto), eq(mockedRequest));
     }
 
 
     @Test
     void gradeAssignmentTest() {
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
         doNothing().when(assignmentService).gradeAssignment(anyInt(), anyInt(), anyFloat(), any(HttpServletRequest.class));
         doNothing().when(notificationsService).sendNotification(anyString(), anyInt());
 
-        ResponseEntity<String> response = assigmentController.gradeAssignment(1,1, 100, request);
+        ResponseEntity<String> response = assigmentController.gradeAssignment(1,1, 100, mockedRequest);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Assignment has been graded successfully.", response.getBody());
 
-        verify(assignmentService, times(1)).gradeAssignment(eq(1),eq(1), eq(100.0f), eq(request));
+        verify(assignmentService, times(1)).gradeAssignment(eq(1),eq(1), eq(100.0f), eq(mockedRequest));
         verify(notificationsService, times(1)).sendNotification(eq("Assignment 1 grade is uploaded"),eq(1));
 
     }
 
     @Test
     void saveAssignmentFeedbackTest() {
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
         doNothing().when(assignmentService).saveAssignmentFeedback(anyInt(), anyInt(), anyString(), any(HttpServletRequest.class));
 
-        ResponseEntity<String> response = assigmentController.saveAssignmentFeedback(1, 1, "done", request);
+        ResponseEntity<String> response = assigmentController.saveAssignmentFeedback(1, 1, "done", mockedRequest);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Assignment feedback is saved successfully.", response.getBody());
 
-        verify(assignmentService, times(1)).saveAssignmentFeedback(eq(1), eq(1), eq("done"), eq(request));
+        verify(assignmentService, times(1)).saveAssignmentFeedback(eq(1), eq(1), eq("done"), eq(mockedRequest));
     }
 
 
     @Test
     void getFeedbackTest() {
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
         when(assignmentService.getFeedback(anyInt(), any(HttpServletRequest.class)))
                 .thenReturn("This is a feedback message");
 
-        ResponseEntity<String> response = assigmentController.getFeedback(1, request);
+        ResponseEntity<String> response = assigmentController.getFeedback(1, mockedRequest);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("This is a feedback message", response.getBody());
 
-        verify(assignmentService, times(1)).getFeedback(eq(1), eq(request));
+        verify(assignmentService, times(1)).getFeedback(eq(1), eq(mockedRequest));
     }
 
     @Test

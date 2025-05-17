@@ -37,6 +37,7 @@ public class Notifications {
         this.notificationsId = notificationsId;
         this.userId = userId;
         this.message = message;
+        this.createdTime = createdTime;
     }
     public int getNotificationsId() {
         return notificationsId;

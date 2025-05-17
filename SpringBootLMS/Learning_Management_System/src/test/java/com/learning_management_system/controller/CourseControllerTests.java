@@ -47,15 +47,15 @@ class CourseControllerTest {
         course.setInstructorId(instructor);
 
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
         doNothing().when(courseService).addCourse(any(Course.class), any(HttpServletRequest.class), anyInt());
 
 
-        ResponseEntity<String> response = courseController.addCourse(course, request);
+        ResponseEntity<String> response = courseController.addCourse(course, mockedRequest);
         assertEquals(200, response.getStatusCodeValue());
 
         assertEquals("Course created successfully.", response.getBody());
-        verify(courseService, times(1)).addCourse(eq(course), eq(request), anyInt());
+        verify(courseService, times(1)).addCourse(eq(course), eq(mockedRequest), anyInt());
     }
 
     @Test

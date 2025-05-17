@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class QuizServiceTest {
+class QuizServiceTest {
     @Mock
     private QuizRepository quizRepository;
     @Mock
@@ -197,7 +197,7 @@ public class QuizServiceTest {
         when(courseRepository.findById(1)).thenReturn(Optional.of(course));
         when(studentRepository.findById(2)).thenReturn(Optional.of(new Student()));
 
-//        when(enrollmentRepository.existsByStudentAndCourse(new Student(),course)).thenReturn(false);
+       when(enrollmentRepository.existsByStudentAndCourse(new Student(),course)).thenReturn(false);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             quizService.getActiveQuiz(1, request);
@@ -426,7 +426,7 @@ public class QuizServiceTest {
         when(mockSession.getAttribute("user")).thenReturn(instructorUser);
         when(courseRepository.findById(1)).thenReturn(Optional.of(course));
 
-        Student student = new Student();
+
         Quiz quiz1 = new Quiz();
         quiz1.setCourse(course);
 

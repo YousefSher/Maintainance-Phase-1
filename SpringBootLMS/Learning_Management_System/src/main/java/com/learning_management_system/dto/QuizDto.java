@@ -66,11 +66,11 @@ public class QuizDto {
         this.course_id = course_id;
     }
 
-    public QuizDto(int quizId, String title, Date creation_date) {
+    public QuizDto(int quizId, String title, Date creation_date,List<QuestionDto> questionList) {
         this.quizId = quizId;
         this.title = title;
         this.creation_date = creation_date;
-        //this.questionList=questionList;
+        this.questionList=questionList;
     }
     public QuizDto(){}
 

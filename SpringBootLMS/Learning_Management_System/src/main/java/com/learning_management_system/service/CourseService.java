@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -129,7 +130,7 @@ public class CourseService {
         try {
             file.transferTo(destination);
         } catch (IOException e) {
-            throw new RuntimeException("File upload failed.", e);
+            throw new UncheckedIOException("File upload failed.", e);
         }
 
         course.setMedia(fileName);
@@ -167,7 +168,7 @@ public class CourseService {
                         course.getMedia(),
                         course.getInstructorId().getFirstName()
                 ))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void sendNotificationsToEnrolledStudents(int courseId, HttpServletRequest request){

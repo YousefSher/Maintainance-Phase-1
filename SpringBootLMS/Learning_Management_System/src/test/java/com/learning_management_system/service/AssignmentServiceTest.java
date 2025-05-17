@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AssignmentServiceTest {
+class AssignmentServiceTest {
 
     @Mock
     private AssignmentRepository assignmentRepository;
@@ -59,7 +59,7 @@ public class AssignmentServiceTest {
 
 
     @BeforeEach
-    public void setUp() {
+     void setUp() {
         MockitoAnnotations.openMocks(this);
 
         studentType = new UsersType();
@@ -114,7 +114,7 @@ public class AssignmentServiceTest {
 
 
     @Test
-    public void UploadAssignment_UserNotLoggedIn() {
+    void UploadAssignment_UserNotLoggedIn() {
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(null);
@@ -127,7 +127,7 @@ public class AssignmentServiceTest {
 }
 
     @Test
-    public void uploadAssignment_NotStudent(){
+    void uploadAssignment_NotStudent(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -144,7 +144,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void uploadAssignment_CourseNotFound(){
+    void uploadAssignment_CourseNotFound(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(studentUser);
@@ -161,7 +161,7 @@ public class AssignmentServiceTest {
 
 
     @Test
-    public void uploadAssignment_NotEnrolled(){
+    void uploadAssignment_NotEnrolled(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(studentUser);
@@ -179,7 +179,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void uploadAssignment_AlreadySubmitted(){
+    void uploadAssignment_AlreadySubmitted(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(studentUser);
@@ -201,7 +201,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void gradeAssignment_UserNotLoggedIn(){
+    void gradeAssignment_UserNotLoggedIn(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(null);
@@ -216,7 +216,7 @@ public class AssignmentServiceTest {
 
 
     @Test
-    public void gradeAssignment_AssignmentNotFound(){
+    void gradeAssignment_AssignmentNotFound(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -232,7 +232,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void gradeAssignment_NotTheInstructor(){
+    void gradeAssignment_NotTheInstructor(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser2);
@@ -251,7 +251,7 @@ public class AssignmentServiceTest {
 
 
     @Test
-    public void gradeAssignment_StudentNotFound(){
+    void gradeAssignment_StudentNotFound(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -270,7 +270,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void gradeAssignment_StudentHasNoSubmissions(){
+    void gradeAssignment_StudentHasNoSubmissions(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -290,7 +290,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void gradeAssignment_StudentDidntSubmit(){
+    void gradeAssignment_StudentDidntSubmit(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -323,7 +323,7 @@ public class AssignmentServiceTest {
 
 
     @Test
-    public void saveAssignmentFeedback_UserNotLoggedIn(){
+    void saveAssignmentFeedback_UserNotLoggedIn(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(null);
@@ -337,7 +337,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void saveAssignmentFeedback_AssignmentNotFound(){
+    void saveAssignmentFeedback_AssignmentNotFound(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -353,7 +353,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void saveAssignmentFeedback_NotTheInstructor(){
+    void saveAssignmentFeedback_NotTheInstructor(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser2);
@@ -372,7 +372,7 @@ public class AssignmentServiceTest {
 
 
     @Test
-    public void saveAssignmentFeedback_StudentNotFound(){
+    void saveAssignmentFeedback_StudentNotFound(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -392,7 +392,7 @@ public class AssignmentServiceTest {
 
 
     @Test
-    public void saveAssignmentFeedback_StudentHasNoSubmissions(){
+    void saveAssignmentFeedback_StudentHasNoSubmissions(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -412,7 +412,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void saveAssignmentFeedback_StudentDidntSubmit(){
+    void saveAssignmentFeedback_StudentDidntSubmit(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -443,7 +443,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void getFeedback_UserNotLoggedIn(){
+    void getFeedback_UserNotLoggedIn(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(null);
@@ -457,7 +457,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void getFeedback_AssignmentNotFound(){
+    void getFeedback_AssignmentNotFound(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -473,7 +473,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void getFeedback_NotStudent(){
+    void getFeedback_NotStudent(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(instructorUser);
@@ -490,7 +490,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void getFeedback_NotEnrolled(){
+    void getFeedback_NotEnrolled(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(studentUser);
@@ -509,7 +509,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void getFeedback_StudentHasNoSubmissions(){
+    void getFeedback_StudentHasNoSubmissions(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(studentUser);
@@ -530,7 +530,7 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void getFeedback_StudentDidntSubmit(){
+    void getFeedback_StudentDidntSubmit(){
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(studentUser);

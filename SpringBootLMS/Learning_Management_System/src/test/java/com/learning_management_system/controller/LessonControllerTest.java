@@ -47,14 +47,14 @@ class LessonControllerTest {
         lesson.setOTP("12345");
         lesson.setCourseId(course);
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
         doNothing().when(lessonService).addLesson(any(Lesson.class), any(HttpServletRequest.class));
 
-        ResponseEntity<String> response = lessonController.addLesson(lesson, request);
+        ResponseEntity<String> response = lessonController.addLesson(lesson, mockedRequest);
         assertEquals(200, response.getStatusCodeValue());
 
         assertEquals("Lesson added successfully.", response.getBody());
-        verify(lessonService, times(1)).addLesson(eq(lesson), eq(request));
+        verify(lessonService, times(1)).addLesson(eq(lesson), eq(mockedRequest));
     }
 
     @Test
@@ -122,14 +122,14 @@ class LessonControllerTest {
         int courseId=1;
         String OTP = "12345";
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        doNothing().when(lessonService).StudentEnterLesson(eq(courseId),eq(lessonId),eq(OTP), eq(request));
+        HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+        doNothing().when(lessonService).StudentEnterLesson(eq(courseId),eq(lessonId),eq(OTP), eq(mockedRequest));
 
         ResponseEntity<?> response = lessonController.studentEnterLesson(courseId,lessonId,OTP, request);
         assertEquals(200, response.getStatusCodeValue());
 
         assertEquals("Student entered lesson successfully.", response.getBody());
-        verify(lessonService, times(1)).StudentEnterLesson(eq(courseId),eq(lessonId),eq(OTP), eq(request));
+        verify(lessonService, times(1)).StudentEnterLesson(eq(courseId),eq(lessonId),eq(OTP), eq(mockedRequest));
     }
 
     @Test
