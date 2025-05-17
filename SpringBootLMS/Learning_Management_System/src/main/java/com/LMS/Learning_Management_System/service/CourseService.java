@@ -86,6 +86,7 @@ public class CourseService {
                 throw new IllegalArgumentException("You are not enrolled to this course.");
             }
         }
+
         return new CourseDto(
                 course.getCourseId(),
                 course.getCourseName(),
@@ -95,6 +96,29 @@ public class CourseService {
                 course.getInstructorId().getFirstName()
         );
 
+    }
+
+    public List<CourseDto> filterCoursesByName(String namePart, HttpServletRequest request) {
+        Users loggedInUser = (Users) request.getSession().getAttribute("user");
+        if (loggedInUser == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
+
+        List<Course> courses = courseRepository.findByCourseNameContaining(namePart);
+        if (courses.isEmpty()) {
+            throw new IllegalArgumentException("No courses found matching the given name part: " + namePart);
+        }
+
+        return courses.stream()
+                .map(course -> new CourseDto(
+                        course.getCourseId(),
+                        course.getCourseName(),
+                        course.getDescription(),
+                        course.getDuration(),
+                        course.getMedia(),
+                        course.getInstructorId().getFirstName()
+                ))
+                .toList();
     }
     public void updateCourse(int courseId, Course updatedCourse, HttpServletRequest request) {
 
