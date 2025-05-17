@@ -1,5 +1,6 @@
 package com.LMS.Learning_Management_System.service;
 
+import com.LMS.Learning_Management_System.dto.NotificationDto;
 import com.LMS.Learning_Management_System.entity.Notifications;
 import com.LMS.Learning_Management_System.entity.Users;
 import com.LMS.Learning_Management_System.entity.UsersType;
@@ -50,7 +51,7 @@ class NotificationServiceTest {
         List<Notifications> notificationsList = List.of(notification1, notification2);
         when(notificationsRepository.findAll()).thenReturn(notificationsList);
 
-        List<String> result = notificationsService.getAllNotifications(1);
+        List<NotificationDto> result = notificationsService.getAllNotifications(1);
 
         assertEquals(2, result.size());
         assertTrue(result.contains("Message 1"));
@@ -67,7 +68,7 @@ class NotificationServiceTest {
 
         when(notificationsRepository.findAll()).thenReturn(notificationsList);
 
-        List<String> result = notificationsService.getAllNotifications(999);
+        List<NotificationDto> result = notificationsService.getAllNotifications(999);
 
         assertTrue(result.isEmpty());
         verify(notificationsRepository, never()).save(any(Notifications.class));
@@ -77,7 +78,7 @@ class NotificationServiceTest {
     void getAllNotificationsForUserWithNoNotifications_Test() {
         when(notificationsRepository.findAll()).thenReturn(List.of());
 
-        List<String> result = notificationsService.getAllNotifications(1);
+        List<NotificationDto> result = notificationsService.getAllNotifications(1);
 
         assertTrue(result.isEmpty());
         verify(notificationsRepository, never()).save(any(Notifications.class));

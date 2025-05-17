@@ -1,9 +1,13 @@
 package com.LMS.Learning_Management_System.service;
 
+import com.LMS.Learning_Management_System.dto.NotificationDto;
 import com.LMS.Learning_Management_System.entity.Notifications;
 import com.LMS.Learning_Management_System.entity.Users;
 import com.LMS.Learning_Management_System.repository.NotificationsRepository;
 import com.LMS.Learning_Management_System.repository.UsersRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +27,74 @@ public class NotificationsService {
         this.usersRepository = usersRepository;
     }
 
-    public List<String> getAllNotifications(int userId) {
+    //For Instructor
+    public List<NotificationDto> getAllNotificationsInstructor(int userId, HttpServletRequest request) {
+        Users loggedInInstructor = (Users) request.getSession().getAttribute("user");
+        if (loggedInInstructor == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
+        if (loggedInInstructor.getUserTypeId() == null || loggedInInstructor.getUserTypeId().getUserTypeId() != 3) {
+            throw new IllegalArgumentException("Logged-in user is not an instructor.");
+        }
+        if(userId != loggedInInstructor.getUserId()){
+            throw new IllegalArgumentException("Logged-in user is an another instructor.");
+        }
+        return getAllNotifications(userId);
+    }
+
+
+
+    //For Student
+    public List<NotificationDto> getAllNotificationsStudent(int userId, HttpServletRequest request) {
+        Users loggedInStudent = (Users) request.getSession().getAttribute("user");
+        if (loggedInStudent == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
+        if (loggedInStudent.getUserTypeId() == null || loggedInStudent.getUserTypeId().getUserTypeId() != 2) {
+            throw new IllegalArgumentException("Logged-in user is not a Student.");
+        }
+        if(userId != loggedInStudent.getUserId()){
+            throw new IllegalArgumentException("Logged-in user is another student.");
+        }
+        return getAllNotifications(userId);
+    }
+
+    public List<NotificationDto> getAllNotificationsAdmin(int userId, HttpServletRequest request) {
+        Users loggedInAdmin = (Users) request.getSession().getAttribute("user");
+        if (loggedInAdmin == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
+        if (loggedInAdmin.getUserTypeId() == null || loggedInAdmin.getUserTypeId().getUserTypeId() != 2) {
+            throw new IllegalArgumentException("Logged-in admin is not a Student.");
+        }
+        if(userId != loggedInAdmin.getUserId()){
+            throw new IllegalArgumentException("Logged-in user is another admin.");
+        }
+        return getAllNotifications(userId);
+    }
+
+    public List<NotificationDto> getAllNotifications(int userId) {
         List<Notifications> notificationsList = notificationsRepository.findAll();
 
-        List<String> notificationsMessage = new ArrayList<>();
+        List<NotificationDto> notificationsDtoList = new ArrayList<>();
 
         for (Notifications notification : notificationsList) {
             if (notification.getUserId().getUserId() == userId) {
                 notification.setRead(true);
-                notificationsMessage.add(notification.getMessage());
                 notificationsRepository.save(notification);
+
+                NotificationDto notificationDto = new NotificationDto();
+                notificationDto.setNotificationsId(notification.getNotificationsId());
+                notificationDto.setUserId(notification.getUserId().getUserId());
+                notificationDto.setMessage(notification.getMessage());
+                notificationDto.setCreatedTime(notification.getCreatedTime());
+                notificationDto.setRead(notification.isRead());
+
+                notificationsDtoList.add(notificationDto);
             }
         }
 
-        return notificationsMessage;
+        return notificationsDtoList;
     }
 
     public List<String> getAllUnreadNotifications(int userId) {

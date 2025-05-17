@@ -1,6 +1,7 @@
 package com.LMS.Learning_Management_System.controller;
 
 
+import com.LMS.Learning_Management_System.dto.NotificationDto;
 import com.LMS.Learning_Management_System.entity.Student;
 import com.LMS.Learning_Management_System.service.NotificationsService;
 import com.LMS.Learning_Management_System.service.StudentService;
@@ -34,7 +35,7 @@ public class StudentController {
     }
 
     @GetMapping("/allnotifications/{userId}")
-    public List<String> getAllNotifications(@PathVariable int userId) {
+    public List<NotificationDto> getAllNotifications(@PathVariable int userId) {
         return notificationsService.getAllNotifications(userId);
     }
 

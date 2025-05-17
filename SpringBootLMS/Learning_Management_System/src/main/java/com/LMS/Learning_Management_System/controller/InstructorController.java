@@ -1,5 +1,7 @@
 package com.LMS.Learning_Management_System.controller;
+import com.LMS.Learning_Management_System.dto.NotificationDto;
 import com.LMS.Learning_Management_System.entity.Instructor;
+import com.LMS.Learning_Management_System.entity.Users;
 import com.LMS.Learning_Management_System.service.InstructorService;
 import com.LMS.Learning_Management_System.service.NotificationsService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,8 +34,13 @@ public class InstructorController {
     }
 
     @GetMapping("/notifications/{userId}")
-    public List<String> getAllNotifications(@PathVariable int userId) {
-        return notificationsService.getAllNotifications(userId);
+    public ResponseEntity<?> getAllNotifications(@PathVariable int userId, HttpServletRequest request) {
+        try {
+            List<NotificationDto> notificationDtoList = notificationsService.getAllNotificationsInstructor(userId, request);
+            return ResponseEntity.ok(notificationDtoList);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/unreadnotifications/{userId}")
