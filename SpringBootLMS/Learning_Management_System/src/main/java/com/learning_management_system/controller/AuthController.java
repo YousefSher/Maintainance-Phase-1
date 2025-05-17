@@ -1,6 +1,5 @@
 package com.learning_management_system.controller;
 import com.learning_management_system.entity.Users;
-import com.LMS.Learning_Management_Systema.service.*;
 import com.learning_management_system.service.UsersService;
 import com.learning_management_system.util.UserSignUpRequest;
 import jakarta.persistence.EntityNotFoundException;

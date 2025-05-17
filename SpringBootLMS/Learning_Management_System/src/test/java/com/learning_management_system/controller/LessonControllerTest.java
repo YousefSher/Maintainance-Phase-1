@@ -125,7 +125,7 @@ class LessonControllerTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         doNothing().when(lessonService).StudentEnterLesson(eq(courseId),eq(lessonId),eq(OTP), eq(request));
 
-        ResponseEntity<?> response = lessonController.StudentEnterLesson(courseId,lessonId,OTP, request);
+        ResponseEntity<?> response = lessonController.studentEnterLesson(courseId,lessonId,OTP, request);
         assertEquals(200, response.getStatusCodeValue());
 
         assertEquals("Student entered lesson successfully.", response.getBody());

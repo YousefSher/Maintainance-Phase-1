@@ -1,10 +1,6 @@
 package com.learning_management_system.service;
 
 import com.learning_management_system.dto.LessonDto;
-import com.LMS.Learning_Management_Systema.entity.*;
-import com.LMS.Learning_Management_Systema.repository.*;
-import com.LMS.learning_management_system.entity.*;
-import com.LMS.learning_management_system.repository.*;
 import com.learning_management_system.entity.*;
 import com.learning_management_system.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
