@@ -73,6 +73,53 @@ public class NotificationsService {
         return getAllNotifications(userId);
     }
 
+
+    //For Instructor
+    public List<NotificationDto> getAllUnreadNotificationsInstructor(int userId, HttpServletRequest request) {
+        Users loggedInInstructor = (Users) request.getSession().getAttribute("user");
+        if (loggedInInstructor == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
+        if (loggedInInstructor.getUserTypeId() == null || loggedInInstructor.getUserTypeId().getUserTypeId() != 3) {
+            throw new IllegalArgumentException("Logged-in user is not an instructor.");
+        }
+        if(userId != loggedInInstructor.getUserId()){
+            throw new IllegalArgumentException("Logged-in user is an another instructor.");
+        }
+        return getAllUnreadNotificationsDto(userId);
+    }
+
+
+
+    //For Student
+    public List<NotificationDto> getAllUnreadNotificationsStudent(int userId, HttpServletRequest request) {
+        Users loggedInStudent = (Users) request.getSession().getAttribute("user");
+        if (loggedInStudent == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
+        if (loggedInStudent.getUserTypeId() == null || loggedInStudent.getUserTypeId().getUserTypeId() != 2) {
+            throw new IllegalArgumentException("Logged-in user is not a Student.");
+        }
+        if(userId != loggedInStudent.getUserId()){
+            throw new IllegalArgumentException("Logged-in user is another student.");
+        }
+        return getAllUnreadNotificationsDto(userId);
+    }
+
+    public List<NotificationDto> getAllUnreadNotificationsAdmin(int userId, HttpServletRequest request) {
+        Users loggedInAdmin = (Users) request.getSession().getAttribute("user");
+        if (loggedInAdmin == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
+        if (loggedInAdmin.getUserTypeId() == null || loggedInAdmin.getUserTypeId().getUserTypeId() != 2) {
+            throw new IllegalArgumentException("Logged-in admin is not a Student.");
+        }
+        if(userId != loggedInAdmin.getUserId()){
+            throw new IllegalArgumentException("Logged-in user is another admin.");
+        }
+        return getAllUnreadNotificationsDto(userId);
+    }
+
     public List<NotificationDto> getAllNotifications(int userId) {
         List<Notifications> notificationsList = notificationsRepository.findAll();
 
@@ -111,6 +158,30 @@ public class NotificationsService {
         }
 
         return notificationsMessage;
+    }
+
+    public List<NotificationDto> getAllUnreadNotificationsDto(int userId) {
+        List<Notifications> notificationsList = notificationsRepository.findAll();
+
+        List<NotificationDto> notificationsDtoList = new ArrayList<>();
+
+        for (Notifications notification : notificationsList) {
+            if (notification.getUserId().getUserId() == userId && !notification.isRead()) {
+                notification.setRead(true);
+                notificationsRepository.save(notification);
+
+                NotificationDto notificationDto = new NotificationDto();
+                notificationDto.setNotificationsId(notification.getNotificationsId());
+                notificationDto.setUserId(notification.getUserId().getUserId());
+                notificationDto.setMessage(notification.getMessage());
+                notificationDto.setCreatedTime(notification.getCreatedTime());
+                notificationDto.setRead(notification.isRead());
+
+                notificationsDtoList.add(notificationDto);
+            }
+        }
+
+        return notificationsDtoList;
     }
 
     public void sendNotification(String message, int id) {

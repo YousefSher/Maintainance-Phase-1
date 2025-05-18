@@ -43,7 +43,12 @@ public class InstructorController {
     }
 
     @GetMapping("/unreadnotifications/{userId}")
-    public List<String> getUnreadNotifications(@PathVariable int userId) {
-        return notificationsService.getAllUnreadNotifications(userId);
+    public ResponseEntity<?> getUnreadNotifications(@PathVariable int userId,HttpServletRequest request) {
+        try {
+            List<NotificationDto> notificationDtoList = notificationsService.getAllUnreadNotificationsInstructor(userId, request);
+            return ResponseEntity.ok(notificationDtoList);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
