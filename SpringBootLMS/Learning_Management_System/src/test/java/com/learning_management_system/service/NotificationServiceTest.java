@@ -40,6 +40,27 @@ class NotificationServiceTest {
     }
 
 
+    @Test
+    void getAllNotificationsForValidUserTest() {
+
+        Users user = new Users(1, "instructor@example.com", "password", new Date(), instructorType);
+        Notifications notification1 = new Notifications(1, user, "Message 1", new Date());
+        notification1.setRead(false);
+        Notifications notification2 = new Notifications(2, user, "Message 2", new Date());
+        notification2.setRead(true);
+
+        List<Notifications> notificationsList = List.of(notification1, notification2);
+        when(notificationsRepository.findAll()).thenReturn(notificationsList);
+
+        List<NotificationDto> result = notificationsService.getAllNotifications(1);
+
+        assertEquals(2, result.size());
+        assertTrue(result.get(0).getMessage().contains("Message 1"));
+        assertTrue(result.get(1).getMessage().contains("Message 2"));
+        verify(notificationsRepository, times(2)).save(any(Notifications.class));
+    }
+
+
 
     @Test
     void getAllNotificationsForInvalidUserTest() {

@@ -64,8 +64,8 @@ public class NotificationsService {
         if (loggedInAdmin == null) {
             throw new IllegalArgumentException("No user is logged in.");
         }
-        if (loggedInAdmin.getUserTypeId() == null || loggedInAdmin.getUserTypeId().getUserTypeId() != 2) {
-            throw new IllegalArgumentException("Logged-in admin is not a Student.");
+        if (loggedInAdmin.getUserTypeId() == null || loggedInAdmin.getUserTypeId().getUserTypeId() != 1) {
+            throw new IllegalArgumentException("Logged-in user is not admin.");
         }
         if(userId != loggedInAdmin.getUserId()){
             throw new IllegalArgumentException("Logged-in user is another admin.");
