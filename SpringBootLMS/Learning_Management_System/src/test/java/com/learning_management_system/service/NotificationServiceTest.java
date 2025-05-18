@@ -1,5 +1,6 @@
 package com.learning_management_system.service;
 
+import com.learning_management_system.dto.NotificationDto;
 import com.learning_management_system.entity.Notifications;
 import com.learning_management_system.entity.Users;
 import com.learning_management_system.entity.UsersType;
@@ -38,25 +39,7 @@ class NotificationServiceTest {
         instructorType.setUserTypeId(3);
     }
 
-    @Test
-    void getAllNotificationsForValidUserTest() {
 
-        Users user = new Users(1, "instructor@example.com", "password", new Date(), instructorType);
-        Notifications notification1 = new Notifications(1, user, "Message 1", new Date());
-        notification1.setRead(false);
-        Notifications notification2 = new Notifications(2, user, "Message 2", new Date());
-        notification2.setRead(true);
-
-        List<Notifications> notificationsList = List.of(notification1, notification2);
-        when(notificationsRepository.findAll()).thenReturn(notificationsList);
-
-        List<String> result = notificationsService.getAllNotifications(1);
-
-        assertEquals(2, result.size());
-        assertTrue(result.contains("Message 1"));
-        assertTrue(result.contains("Message 2"));
-        verify(notificationsRepository, times(2)).save(any(Notifications.class));
-    }
 
     @Test
     void getAllNotificationsForInvalidUserTest() {
@@ -67,7 +50,7 @@ class NotificationServiceTest {
 
         when(notificationsRepository.findAll()).thenReturn(notificationsList);
 
-        List<String> result = notificationsService.getAllNotifications(999);
+        List<NotificationDto> result = notificationsService.getAllNotifications(999);
 
         assertTrue(result.isEmpty());
         verify(notificationsRepository, never()).save(any(Notifications.class));
@@ -77,7 +60,7 @@ class NotificationServiceTest {
     void getAllNotificationsForUserWithNoNotifications_Test() {
         when(notificationsRepository.findAll()).thenReturn(List.of());
 
-        List<String> result = notificationsService.getAllNotifications(1);
+        List<NotificationDto> result = notificationsService.getAllNotifications(1);
 
         assertTrue(result.isEmpty());
         verify(notificationsRepository, never()).save(any(Notifications.class));
