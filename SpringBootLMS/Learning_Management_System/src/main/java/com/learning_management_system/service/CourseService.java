@@ -161,7 +161,17 @@ public class CourseService {
         courseRepository.save(course);
     }
 
+    public List<CourseDto> getEnrolledCourses(HttpServletRequest request) {
+        Users loggedInStudent = (Users) request.getSession().getAttribute("user");
+        if (loggedInStudent == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
 
+        List<Course> courses = enrollmentRepository.findStudentEnrollments(loggedInStudent.getUserId());
+
+        return convertToCourseDtoList(courses);
+
+    }
 
 
     private Course check_before_logic(int courseId, HttpServletRequest request)
