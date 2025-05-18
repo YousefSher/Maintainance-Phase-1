@@ -90,6 +90,14 @@ public class CourseController {
             return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
         }
     }
-
+    @GetMapping("/enrolled_courses")
+    public ResponseEntity<?> getEnrolledCourses(HttpServletRequest request) {
+        try {
+            List<CourseDto> courseDTOList = courseService.getEnrolledCourses(request);
+            return ResponseEntity.ok(courseDTOList);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
 // ResponseEntity<?> is a flexible way to represent HTTP responses with different types of body content in Spring controllers

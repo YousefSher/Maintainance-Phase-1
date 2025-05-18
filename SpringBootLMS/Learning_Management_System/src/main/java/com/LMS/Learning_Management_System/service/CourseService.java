@@ -65,7 +65,17 @@ public class CourseService {
         return convertToCourseDtoList(courses);
 
     }
+    public List<CourseDto> getEnrolledCourses(HttpServletRequest request) {
+        Users loggedInStudent = (Users) request.getSession().getAttribute("user");
+        if (loggedInStudent == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
 
+        List<Course> courses = enrollmentRepository.findStudentEnrollments(loggedInStudent.getUserId());
+
+        return convertToCourseDtoList(courses);
+
+    }
     public CourseDto getCourseById(int id ,HttpServletRequest request) {
         Users loggedInInstructor = (Users) request.getSession().getAttribute("user");
         if (loggedInInstructor == null) {
