@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -71,7 +70,17 @@ public class CourseService {
         return convertToCourseDtoList(courses);
 
     }
+    public List<CourseDto> getEnrolledCourses(HttpServletRequest request) {
+        Users loggedInStudent = (Users) request.getSession().getAttribute("user");
+        if (loggedInStudent == null) {
+            throw new IllegalArgumentException("No user is logged in.");
+        }
 
+        List<Course> courses = enrollmentRepository.findStudentEnrollments(loggedInStudent.getUserId());
+
+        return convertToCourseDtoList(courses);
+
+    }
     public CourseDto getCourseById(int id ,HttpServletRequest request) {
         Users loggedInInstructor = (Users) request.getSession().getAttribute("user");
         if (loggedInInstructor == null) {
@@ -160,19 +169,6 @@ public class CourseService {
         course.setMedia(fileName);
         courseRepository.save(course);
     }
-
-    public List<CourseDto> getEnrolledCourses(HttpServletRequest request) {
-        Users loggedInStudent = (Users) request.getSession().getAttribute("user");
-        if (loggedInStudent == null) {
-            throw new IllegalArgumentException("No user is logged in.");
-        }
-
-        List<Course> courses = enrollmentRepository.findStudentEnrollments(loggedInStudent.getUserId());
-
-        return convertToCourseDtoList(courses);
-
-    }
-
 
     private Course check_before_logic(int courseId, HttpServletRequest request)
     {

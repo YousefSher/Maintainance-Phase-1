@@ -47,7 +47,7 @@ public class AuthController {
                         new UsernamePasswordAuthenticationToken(email, null, List.of());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                return ResponseEntity.ok("Login successful. Welcome, " + user.getEmail());
+                return ResponseEntity.ok("Login successful. Welcome, " + user.getEmail() + " " + user.getUserId());
             } else {
                 return ResponseEntity.badRequest().body("Invalid email or password.");
             }
@@ -60,7 +60,6 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         SecurityContextHolder.clearContext();
-
         return ResponseEntity.ok("Successfully logged out");
     }
 }

@@ -96,6 +96,7 @@ public class CourseController {
         }
     }
 
+
     @GetMapping("/enrolled_courses")
     public ResponseEntity<?> getEnrolledCourses(HttpServletRequest request) {
         try {
