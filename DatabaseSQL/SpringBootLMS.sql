@@ -22,7 +22,7 @@ CREATE TABLE `users` (
   CONSTRAINT `FK5snet2ikvi03wd4rabd40ckdl` FOREIGN KEY (`user_type_id`) REFERENCES `users_type` (`user_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `users` (`user_id`, `email`, `password`, `user_type_id`) VALUES ('1', 'admin@example.com', '$2a$10$LWpX75nzcJOw3Q3yNeBTTuvtEUA9ObsdQankX4iw7ykykJtI10sUy', '1');
+INSERT INTO `users` (`user_id`, `email`, `password`, `user_type_id`) VALUES ('1', 'admin@example.com', '12345', '1');
 
 CREATE TABLE `student` (
   `user_account_id` int NOT NULL,
@@ -47,8 +47,6 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`user_account_id`),
   CONSTRAINT `FK_admin_user` FOREIGN KEY (`user_account_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-insert into admin (`user_account_id`) values ('1') ;
 
 CREATE TABLE `course` (
   `course_id` int NOT NULL AUTO_INCREMENT,
