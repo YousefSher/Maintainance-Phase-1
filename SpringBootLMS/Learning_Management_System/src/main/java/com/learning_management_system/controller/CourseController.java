@@ -37,6 +37,15 @@ public class CourseController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/filter_courses/{namePart}")
+    public ResponseEntity<?> filterCoursesByName(@PathVariable String namePart, HttpServletRequest request) {
+        try {
+            List<CourseDto> filteredCourses = courseService.filterCoursesByName(namePart, request);
+            return ResponseEntity.ok(filteredCourses);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     @GetMapping("/all_courses")
     public ResponseEntity<?> getAllCourses(HttpServletRequest request) {
         try {
